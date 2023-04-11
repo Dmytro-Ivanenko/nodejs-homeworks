@@ -31,12 +31,17 @@ const contactValidateSchema = Joi.object({
 	favorite: Joi.boolean().required(),
 });
 
+const favoriteValidateSchema = Joi.object({
+	favorite: Joi.boolean().required(),
+});
+
 ContactSchema.post('save', handleMongooseError);
 
 const Contact = model('contact', ContactSchema);
 
 const schemas = {
 	contactValidateSchema,
+	favoriteValidateSchema,
 };
 
 module.exports = { Contact, schemas };
