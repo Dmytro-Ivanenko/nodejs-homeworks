@@ -1,10 +1,19 @@
 const express = require('express');
-const Router = express.Router();
 
-// глянути мідлвар для валідації з минулого уроку
+const { validateBody } = require('../../utils');
+const { schemas } = require('../../models/user.js');
+const { register, login } = require('../../controllers/authControllers.js');
+
+const router = express.Router();
 
 // routes
-router.post('/register', getContactsList);
+router.post(
+	'/register',
+	validateBody(schemas.registerValidateSchema),
+	register
+);
+
+router.post('/login', validateBody(schemas.loginValidateSchema), login);
 
 // export
 module.exports = router;

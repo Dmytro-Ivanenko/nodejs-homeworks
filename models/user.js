@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 const { handleMongooseError } = require('../helpers');
 
-const emailRegexp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const UserSchema = new Schema(
 	{
@@ -39,7 +39,7 @@ const loginValidateSchema = Joi.object({
 
 UserSchema.post('save', handleMongooseError);
 
-const User = model('contact', UserSchema);
+const User = model('user', UserSchema);
 
 const schemas = {
 	registerValidateSchema,

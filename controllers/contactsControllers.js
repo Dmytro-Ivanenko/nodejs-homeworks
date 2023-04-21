@@ -4,12 +4,13 @@ const { ctrlWrapper } = require('../decorators');
 const { Contact, schemas } = require('../models/contact');
 
 // Controllers
+
+// get
 const getContactsList = async (req, res) => {
 	const result = await Contact.find();
 	res.status(200).json(result);
 };
 
-// get
 const getContactByID = async (req, res) => {
 	const { contactId } = req.params;
 	const result = await Contact.findById(contactId);
@@ -71,6 +72,7 @@ const updateFavorite = async (req, res) => {
 
 	res.status(200).json(result);
 };
+
 // delete
 const deleteContact = async (req, res) => {
 	const { contactId } = req.params;
