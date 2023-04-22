@@ -8,12 +8,20 @@ const { Contact, schemas } = require('../models/contact');
 // get
 const getContactsList = async (req, res) => {
 	const { _id: owner } = req.user;
-	const { page = 1, limit = 20 } = req.query;
+	const { page = 1, limit = 20, favorite } = req.query;
 	const skip = (page - 1) * limit;
-	const result = await Contact.find({ owner }, '-updatedAt', {
+
+	let filter = { owner };
+
+	if (favorite) {
+		filter = { ...filter, favorite };
+	}
+
+	const result = await Contact.find({ ...filter }, '-updatedAt', {
 		skip,
 		limit,
 	}).populate('owner', 'name email');
+
 	res.status(200).json(result);
 };
 

@@ -8,7 +8,6 @@ const { SECRET_KEY } = process.env;
 const validateToken = async (req, res, next) => {
 	const { authorization = '' } = req.headers;
 	const [bearer, token] = authorization.split(' ');
-	console.log(SECRET_KEY);
 
 	if (bearer !== 'Bearer') {
 		next(HttpError(401, 'Not authorized'));
@@ -18,13 +17,12 @@ const validateToken = async (req, res, next) => {
 		const { id } = jwt.verify(token, SECRET_KEY);
 		const user = await User.findById(id);
 
-		if (!user) {
+		if (!user || !user.token) {
 			next(HttpError(401, 'Not authorized'));
 		}
 		req.user = user;
 		next();
 	} catch (error) {
-		console.log(error);
 		next(HttpError(401, 'Not authorized'));
 	}
 };
