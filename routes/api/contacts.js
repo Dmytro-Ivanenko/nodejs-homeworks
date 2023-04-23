@@ -8,15 +8,17 @@ const {
 	updateFavorite,
 	deleteContact,
 } = require('../../controllers/contactsControllers');
+const { validateToken } = require('../../utils');
+
 const router = express.Router();
 
 // routes
-router.get('/', getContactsList);
-router.get('/:contactId', getContactByID);
-router.post('/', postContact);
-router.put('/:contactId', updateContactByID);
-router.put('/:contactId/favorite', updateFavorite);
-router.delete('/:contactId', deleteContact);
+router.get('/', validateToken, getContactsList);
+router.get('/:contactId', validateToken, getContactByID);
+router.post('/', validateToken, postContact);
+router.put('/:contactId', validateToken, updateContactByID);
+router.put('/:contactId/favorite', validateToken, updateFavorite);
+router.delete('/:contactId', validateToken, deleteContact);
 
 // export
 module.exports = router;
