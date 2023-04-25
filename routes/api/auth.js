@@ -8,8 +8,9 @@ const {
 	getCurrentUser,
 	logout,
 	updateSubscription,
+	updateAvatar,
 } = require('../../controllers/authControllers.js');
-const { validateToken } = require('../../utils');
+const { validateToken, upload } = require('../../utils');
 
 const router = express.Router();
 
@@ -29,6 +30,7 @@ router.patch(
 	validateBody(schemas.subscriptionValidateSchema),
 	updateSubscription
 );
+router.patch('/avatars', validateToken, upload.single('avatar'), updateAvatar);
 
 // export
 module.exports = router;
