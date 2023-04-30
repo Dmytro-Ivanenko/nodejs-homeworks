@@ -4,6 +4,8 @@ const { validateBody } = require('../../utils');
 const { schemas } = require('../../models/user.js');
 const {
 	register,
+	verify,
+	resendVerifyEmail,
 	login,
 	getCurrentUser,
 	logout,
@@ -20,7 +22,12 @@ router.post(
 	validateBody(schemas.registerValidateSchema),
 	register
 );
-
+router.get('/verify/:verificationToken', verify);
+router.post(
+	'/verify',
+	validateBody(schemas.resendVerifySchema),
+	resendVerifyEmail
+);
 router.post('/login', validateBody(schemas.loginValidateSchema), login);
 router.post('/logout', validateToken, logout);
 router.get('/current', validateToken, getCurrentUser);
